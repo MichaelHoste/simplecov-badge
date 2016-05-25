@@ -3,9 +3,9 @@ if Gem::Version.new(SimpleCov::VERSION) < Gem::Version.new("0.7.1")
   raise RuntimeError, "The version of SimpleCov you are using is too old. Please update with `gem install simplecov` or `bundle update simplecov`"
 end
 
-class SimpleCov::Formatter::BadgeFormatter
-  ImageMagickError = Class.new(StandardError)
+ImageMagickError = Class.new(StandardError)
 
+class SimpleCov::Formatter::BadgeFormatter
   # Set up config variables.
   options = {:badge_title => 'TEST COVERAGE', :generate_groups => true, :timestamp => false, :green => '#4fb151',
             :yellow => '#ded443', :red => '#a23e3f', :number_font => 'Helvetica-Narrow-Bold',
