@@ -29,10 +29,10 @@ class SimpleCov::Formatter::BadgeFormatter
       generate_header_badge(result)
       generate_group_badges(result) if @@generate_groups
       generate_timestamp if @@timestamp
-      @output.puts output_message(result)
+      #@output.puts output_message(result)
     rescue ImageMagickError => e
-     @output.puts e.message
-     @output.puts "Simplecov-Badge was unable to generate a badge for #{result.command_name}."
+      @output.puts e.message
+      @output.puts "Simplecov-Badge was unable to generate a badge for #{result.command_name}."
     end
   end
 

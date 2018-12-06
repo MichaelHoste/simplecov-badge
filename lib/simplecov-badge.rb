@@ -32,7 +32,7 @@ class SimpleCov::Formatter::BadgeFormatter
       generate_header_badge(result)
       generate_group_badges(result) if @@generate_groups
       generate_timestamp if @@timestamp
-      puts output_message(result)
+      #puts output_message(result)
     rescue ImageMagickError => e
      puts e
      puts "Simplecov-Badge was unable to generate a badge for #{result.command_name}."
