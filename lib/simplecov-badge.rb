@@ -58,7 +58,8 @@ class SimpleCov::Formatter::BadgeFormatter
   def generator(cov, strength, group)
     command = []
     command[0] = """
-      convert -size 52x#{get_config('badge_height', group)} xc:'#{coverage_color(cov)}' -pointsize #{get_config('number_font_size', group)} -font \"#{get_config('number_font', group)}\" \
+      convert -quiet
+      -size 52x#{get_config('badge_height', group)} xc:'#{coverage_color(cov)}' -pointsize #{get_config('number_font_size', group)} -font \"#{get_config('number_font', group)}\" \
       -gravity center -fill white -draw \"kerning 2 text +2,-1 '#{cov}%'\" \
       -pointsize 10 -font \"#{get_config('number_font', group)}\" \
       -gravity south -fill white -draw \"text 0,-1 'coverage'\" \
@@ -69,7 +70,8 @@ class SimpleCov::Formatter::BadgeFormatter
       #{output_path}/tmp.png
       """
     command[1] = """
-      convert #{output_path}/tmp.png \\( -size 260x#{get_config('badge_height', group)} xc:\"#{title_background(cov, strength, get_config('strength_foreground', group), get_config('color_code_title', group))}\" \
+      convert -quiet
+      #{output_path}/tmp.png \\( -size 260x#{get_config('badge_height', group)} xc:\"#{title_background(cov, strength, get_config('strength_foreground', group), get_config('color_code_title', group))}\" \
       -pointsize #{get_config('name_font_size', group)} -fill \"#{title_foreground(cov, strength, get_config('strength_foreground', group), get_config('color_code_title', group))}\" -font \"#{get_config('name_font', group)}\" \
       -draw \"kerning 1 text #{group ? 2 : 4},#{group ? 16 : 19} '#{group ? group.upcase : @@badge_title}'\" \
       -gravity West -background white -splice 1x0  \
@@ -79,7 +81,8 @@ class SimpleCov::Formatter::BadgeFormatter
       -background none +append #{output_path}/tmp.png
       """
     command[2] =   """
-        convert #{output_path}/tmp.png \\( -size 52x#{get_config('badge_height', group)} xc:\"#{strength_background(strength, get_config('strength_foreground', group))}\" -pointsize #{get_config('number_font_size', group)} -font \"#{get_config('number_font', group)}\" \
+        convert -quiet
+        #{output_path}/tmp.png \\( -size 52x#{get_config('badge_height', group)} xc:\"#{strength_background(strength, get_config('strength_foreground', group))}\" -pointsize #{get_config('number_font_size', group)} -font \"#{get_config('number_font', group)}\" \
         -gravity Center -fill white -draw \"kerning 2 text 0,-1 '#{strength}'\" \
         -pointsize 10 -font \"#{get_config('number_font', group)}\" \
         -gravity south -fill white -draw \"text 0,-1 'hits/line'\" \
@@ -90,7 +93,8 @@ class SimpleCov::Formatter::BadgeFormatter
         -background none +append #{output_path}/tmp.png
         """
     command[3] = """
-      convert #{output_path}/tmp.png -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] 10,10' \
+      convert -quiet
+      #{output_path}/tmp.png -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] 10,10' \
       -write info:#{output_path}/tmp.mvg \
       -alpha set -bordercolor none -border 3 \
       \\( +clone -alpha transparent -background none \
@@ -99,10 +103,12 @@ class SimpleCov::Formatter::BadgeFormatter
       -gravity South -chop 0x1 #{output_path}/tmp.png
       """
     command[4] = """
-      convert #{output_path}/tmp.png #{output_path}/coverage-badge.png
+      convert -quiet
+      #{output_path}/tmp.png #{output_path}/coverage-badge.png
       """
     command[5] = """
-      convert #{output_path}/coverage-badge.png #{output_path}/tmp.png -background none -gravity center -append #{output_path}/coverage-badge.png
+      convert -quiet
+      #{output_path}/coverage-badge.png #{output_path}/tmp.png -background none -gravity center -append #{output_path}/coverage-badge.png
       """
     begin
       command.each_with_index do |cmd, i|
@@ -119,7 +125,8 @@ class SimpleCov::Formatter::BadgeFormatter
 
   def generate_timestamp
     timestamp_cmd = """
-      convert #{output_path}/coverage-badge.png -alpha set -bordercolor none -border 3 \
+      convert -quiet
+      #{output_path}/coverage-badge.png -alpha set -bordercolor none -border 3 \
       -gravity North -chop 0x3 \
       -gravity East -chop 3x0 \
       -gravity West -chop 3x0 \\( -background none -font 'Helvetica' label:'Generated #{Time.now.strftime('%m-%d-%y %H:%M UTC')}' \\) -background none -gravity center -append #{output_path}/coverage-badge.png
