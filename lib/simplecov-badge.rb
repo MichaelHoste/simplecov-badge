@@ -58,7 +58,7 @@ class SimpleCov::Formatter::BadgeFormatter
   def generator(cov, strength, group)
     command = []
     command[0] = """
-      convert -quiet
+      convert -quiet \
       -size 52x#{get_config('badge_height', group)} xc:'#{coverage_color(cov)}' -pointsize #{get_config('number_font_size', group)} -font \"#{get_config('number_font', group)}\" \
       -gravity center -fill white -draw \"kerning 2 text +2,-1 '#{cov}%'\" \
       -pointsize 10 -font \"#{get_config('number_font', group)}\" \
@@ -70,7 +70,7 @@ class SimpleCov::Formatter::BadgeFormatter
       #{output_path}/tmp.png
       """
     command[1] = """
-      convert -quiet
+      convert -quiet \
       #{output_path}/tmp.png \\( -size 260x#{get_config('badge_height', group)} xc:\"#{title_background(cov, strength, get_config('strength_foreground', group), get_config('color_code_title', group))}\" \
       -pointsize #{get_config('name_font_size', group)} -fill \"#{title_foreground(cov, strength, get_config('strength_foreground', group), get_config('color_code_title', group))}\" -font \"#{get_config('name_font', group)}\" \
       -draw \"kerning 1 text #{group ? 2 : 4},#{group ? 16 : 19} '#{group ? group.upcase : @@badge_title}'\" \
@@ -81,7 +81,7 @@ class SimpleCov::Formatter::BadgeFormatter
       -background none +append #{output_path}/tmp.png
       """
     command[2] =   """
-        convert -quiet
+        convert -quiet \
         #{output_path}/tmp.png \\( -size 52x#{get_config('badge_height', group)} xc:\"#{strength_background(strength, get_config('strength_foreground', group))}\" -pointsize #{get_config('number_font_size', group)} -font \"#{get_config('number_font', group)}\" \
         -gravity Center -fill white -draw \"kerning 2 text 0,-1 '#{strength}'\" \
         -pointsize 10 -font \"#{get_config('number_font', group)}\" \
@@ -93,7 +93,7 @@ class SimpleCov::Formatter::BadgeFormatter
         -background none +append #{output_path}/tmp.png
         """
     command[3] = """
-      convert -quiet
+      convert -quiet \
       #{output_path}/tmp.png -format 'roundrectangle 1,1 %[fx:w+4],%[fx:h+4] 10,10' \
       -write info:#{output_path}/tmp.mvg \
       -alpha set -bordercolor none -border 3 \
@@ -103,11 +103,11 @@ class SimpleCov::Formatter::BadgeFormatter
       -gravity South -chop 0x1 #{output_path}/tmp.png
       """
     command[4] = """
-      convert -quiet
+      convert -quiet \
       #{output_path}/tmp.png #{output_path}/coverage-badge.png
       """
     command[5] = """
-      convert -quiet
+      convert -quiet \
       #{output_path}/coverage-badge.png #{output_path}/tmp.png -background none -gravity center -append #{output_path}/coverage-badge.png
       """
     begin
@@ -125,7 +125,7 @@ class SimpleCov::Formatter::BadgeFormatter
 
   def generate_timestamp
     timestamp_cmd = """
-      convert -quiet
+      convert -quiet \
       #{output_path}/coverage-badge.png -alpha set -bordercolor none -border 3 \
       -gravity North -chop 0x3 \
       -gravity East -chop 3x0 \
